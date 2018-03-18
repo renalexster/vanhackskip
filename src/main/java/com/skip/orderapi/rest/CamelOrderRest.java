@@ -33,12 +33,11 @@ public class CamelOrderRest extends RouteBuilder {
 		.bean(Utils.class, "debug")			
 		.endRest()
 
-		.post().produces("application/json").type(Order.class).route()
+		.post().produces("application/json").type(Order.class).route().transacted()
 		.log("Creating new Order with payload ${body}...")
 		.to("direct:checkToken")
-		.bean(Utils.class, "debug")			
 		.bean(OrderService.class, "persistOrder")
-		.bean(Utils.class, "debug")			
+		.setBody().simple("OK")
 		.endRest()
 		
 		.get("/customer/orders").produces("application/json").route()
