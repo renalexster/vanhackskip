@@ -7,7 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.skip.orderapi.utils.JsonBean;
 
 @Entity
@@ -22,8 +24,11 @@ public class Store extends JsonBean{
 	
 	@ManyToOne
 	@JoinColumn(name="cousineId")
+	@JsonIgnore
 	private Cousine cousine;
 	
+	@Transient
+	private Cousine cousineId;
 	
 	public Store(String name, String address, Cousine cousine) {
 		super();
@@ -66,6 +71,10 @@ public class Store extends JsonBean{
 
 	public void setCousine(Cousine cousine) {
 		this.cousine = cousine;
+	}
+
+	public Long getCousineId() {
+		return this.cousine.getId();
 	}
 	
 }
