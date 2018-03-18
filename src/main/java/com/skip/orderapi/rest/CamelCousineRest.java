@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.skip.orderapi.exception.AuthException;
 import com.skip.orderapi.service.CousineService;
-import com.skip.orderapi.service.CustomerService;
 import com.skip.orderapi.utils.ErrorHandleRouter;
 import com.skip.orderapi.utils.Utils;
 
