@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 import com.skip.orderapi.dto.AuthDTO;
 import com.skip.orderapi.exception.AuthException;
 import com.skip.orderapi.model.Customer;
-import com.skip.orderapi.repository.Facade;
+import com.skip.orderapi.service.CustomerService;
 import com.skip.orderapi.utils.ErrorHandleRouter;
+import com.skip.orderapi.utils.JWTService;
 import com.skip.orderapi.utils.Utils;
 
 @Component
@@ -28,19 +29,21 @@ public class CamelCustomerRest extends RouteBuilder {
 		rest("/customer")
 		.get().produces("application/json").route()
 		.log("LIST Customer updated...")
-		.bean(Facade.class, "listAllCustomers")
+		.bean(CustomerService.class, "listAllCustomers")
 		.bean(Utils.class, "debug")			
 		.endRest()
 		
 		.post().produces("plain/text").consumes("application/json").type(Customer.class).route()
 		.log("Inserting Customer...")
 		.bean(Utils.class, "debug")			
-		.bean(Facade.class, "insertNewCustomer").endRest()
+		.bean(CustomerService.class, "insertNewCustomer").endRest()
 		
 		.post("/auth").produces("plain/text").consumes("application/json").type(AuthDTO.class).route()
 		.log("Inserting Customer...")
 		.bean(Utils.class, "debug")			
-		.bean(Facade.class, "authCustomer")
+		.bean(CustomerService.class, "authCustomer")
+		.bean(JWTService.class, "createToken")
+		.endRest()
 		
 		;
 	}

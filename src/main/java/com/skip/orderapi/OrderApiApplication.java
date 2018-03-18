@@ -25,8 +25,10 @@ public class OrderApiApplication {
 	public CommandLineRunner runner() {
 	    return args -> {
 	        Customer c1 = new Customer();
-	        c1.setName("Renato");
-	        
+	        c1.setName("Renato Barros");
+	        c1.setEmail("renalexster@gmail.com");
+	        c1.setPassword("123456");
+	       
 	        customerepo.save(c1);
 	    };
 	}
