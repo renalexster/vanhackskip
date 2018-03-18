@@ -1,5 +1,7 @@
 package com.skip.orderapi;
 
+import java.util.Arrays;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.skip.orderapi.model.Cousine;
 import com.skip.orderapi.model.Customer;
+import com.skip.orderapi.model.Store;
+import com.skip.orderapi.repository.CousineRepository;
 import com.skip.orderapi.repository.CustomerRepository;
+import com.skip.orderapi.repository.StoreRepository;
 
 @SpringBootApplication
 public class OrderApiApplication {
@@ -18,7 +24,9 @@ public class OrderApiApplication {
 		SpringApplication.run(OrderApiApplication.class, args);
 	}
 	
-	@Autowired CustomerRepository customerepo;
+	@Autowired CustomerRepository customeRepo;
+	@Autowired CousineRepository cousineRepo;
+	@Autowired StoreRepository storeRepo;
 	
 	@Bean
 	@Transactional
@@ -29,7 +37,26 @@ public class OrderApiApplication {
 	        c1.setEmail("renalexster@gmail.com");
 	        c1.setPassword("123456");
 	       
-	        customerepo.save(c1);
+	        customeRepo.save(c1);
+	        
+	        cousineRepo.save(Arrays.asList(new Cousine("Pizza")
+	        		, new Cousine("Chinese")
+	        		, new Cousine("Vietnamese")
+	        		, new Cousine("Sushi")
+	        		));
+	        
+	        Cousine fix = new Cousine();
+	        fix.setId(1l);
+	        
+	        
+	        storeRepo.save(Arrays.asList(
+	        		new Store("Hai Shang", "2991 Pembina Hwy, Winnipeg, Manitoba R3T 2H5, Canada", fix)
+	        		,new Store("Ye's", "616 St James St, Winnipeg, Manitoba R3G 3J5, Canada", fix)
+	        		,new Store("Good Earth Chop Suey House", "1849 Portage Ave, Winnipeg, Manitoba R3J 0G8, Canada", fix)
+	        		));
+	        
+	        
+	        
 	    };
 	}
 }
