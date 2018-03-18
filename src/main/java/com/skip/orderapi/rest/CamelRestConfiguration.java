@@ -1,10 +1,13 @@
 package com.skip.orderapi.rest;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.skip.orderapi.exception.AuthException;
 import com.skip.orderapi.repository.CustomerRepository;
 
 @Component
@@ -22,7 +25,7 @@ public class CamelRestConfiguration extends RouteBuilder{
         .apiProperty("api.title", "Skip")
         .apiProperty("api.version", "1.0.0")
         .apiProperty("cors", "true");
-		
+
 	}
 
 }
