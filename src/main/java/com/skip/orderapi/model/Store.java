@@ -24,11 +24,16 @@ public class Store extends JsonBean{
 	@JoinColumn(name="cousineId")
 	private Cousine cousine;
 	
+	
 	public Store(String name, String address, Cousine cousine) {
 		super();
 		this.name = name;
 		this.address = address;
 		this.cousine = cousine;
+	}
+
+	public Store() {
+		super();
 	}
 
 	public Long getId() {
