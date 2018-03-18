@@ -51,8 +51,10 @@ public class OrderApiApplication {
 	        Cousine fix = new Cousine();
 	        fix.setId(1l);
 	        
-	        Store fixStore = new Store();
-	        fixStore.setId(1l);;
+	        Store fixStoreOne = new Store();
+	        fixStoreOne.setId(1l);;
+	        Store fixStoreTwo = new Store();
+	        fixStoreTwo.setId(2l);;
 	        
 	        
 	        storeRepo.save(Arrays.asList(
@@ -63,9 +65,10 @@ public class OrderApiApplication {
 	        
 	        
 	        productRepo.save(Arrays.asList(
-	        		new Product(fixStore, "Shrimp Tempura", "Fresh shrimp battered and deep fried until golden brown", 10.95d)
-	        		,new Product(fixStore, "Shrimp with Snow Peas and Cashew", "A delicious combination of fresh shrimp, snow peas, and cashew", 12.5d)
-	        		,new Product(fixStore, "Special Deep-Fried Fish", "Tilapia fish deep fried until flaky and tender", 12.95d)
+	        		new Product(fixStoreOne, "Shrimp Tempura", "Fresh shrimp battered and deep fried until golden brown", 10.95d)
+	        		,new Product(fixStoreOne, "Shrimp with Snow Peas and Cashew", "A delicious combination of fresh shrimp, snow peas, and cashew", 12.5d)
+	        		,new Product(fixStoreOne, "Special Deep-Fried Fish", "Tilapia fish deep fried until flaky and tender", 12.95d)
+	        		,new Product(fixStoreTwo, "BBQ Pork Egg Foo Yung", "Chinese omelette filled with barbequed pork", 10.95d)
 	        		));
 	        
 	    };

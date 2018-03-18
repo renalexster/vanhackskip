@@ -17,6 +17,9 @@ public class CousineService {
 	@Autowired private CousineRepository cousineRepo;
 	private Logger LOG = LoggerFactory.getLogger(getClass());
 
+	public Iterable<Cousine> listAll(){
+		return cousineRepo.findAll();
+	}
 	public List<Cousine> search(@Header("searchText") String searchText){
 		return cousineRepo.searchCousineByName(searchText.toLowerCase());
 	}

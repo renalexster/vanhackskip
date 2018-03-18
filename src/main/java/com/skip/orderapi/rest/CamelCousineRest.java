@@ -24,6 +24,12 @@ public class CamelCousineRest extends RouteBuilder {
 		.markRollbackOnly();
 		
 		rest("/cousine")
+		.get().produces("application/json").route()
+		.log("Find Cousine ${header[searchText]}...")
+		.bean(CousineService.class, "listAll")
+		.bean(Utils.class, "debug")			
+		.endRest()
+		
 		.get("/search/{searchText}").produces("application/json").route()
 		.log("Find Cousine ${header[searchText]}...")
 		.bean(CousineService.class, "search")
