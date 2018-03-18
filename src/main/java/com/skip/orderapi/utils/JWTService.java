@@ -17,6 +17,7 @@ import org.jose4j.keys.HmacKey;
 import org.jose4j.lang.JoseException;
 import org.springframework.stereotype.Component;
 
+import com.skip.orderapi.dto.JwtDTO;
 import com.skip.orderapi.exception.AuthException;
 
 import net.minidev.json.JSONObject;
@@ -24,13 +25,13 @@ import net.minidev.json.JSONObject;
 @Component
 public class JWTService {
 	public static final String SECRET = "ANJZbXK6oPnigjfVE44dYBwnYZ5iHcLcsLBFnYcJW9iVjyQ6tp3gLzROKZeErDjWmbo5d3n78e2w9xRR15jKXTzxOTrlkVLmiLMK0XFVgs6OdLbdwEzLOC2lJweqNsUW/M/mw51a2krk9QL5v45xhUs2z9m/lHraoZHykJT5Ovb9Q9xsB3pVxkrSDirx89onEsAmudGag9itd2oD8sxZ39vJuTu1n9MUouFm5L1FXpdRvi4/HVLJmEDQmP4knhTo/ESxmRPYFHhmArK97pJ66mPenLSRz6OyQvaNtxFhrG7DH2mQFWYM3+djIedf9MugooaZZ1wljIuwJMhSM9CYXg==";
-	public static final String ISSUER = "sds_ati";
-	public static final String SUBJECT = "alerta_celular";
+	public static final String ISSUER = "skip";
+	public static final String SUBJECT = "skip_the_disher";
 	public static final String JWT_TYPE = "JWT";
 	public static final String BEARER_TYPE = "Bearer";
 	public static final long TT_MINUTES = 60; // 60 minutos
 
-	public String createToken(@Body JSONObject jsonLoggedUser, Exchange exchange) throws UnsupportedEncodingException, JoseException {		
+	public JwtDTO createToken(@Body JSONObject jsonLoggedUser, Exchange exchange) throws UnsupportedEncodingException, JoseException {		
 		String name = jsonLoggedUser.getAsString("name");
 		String email = jsonLoggedUser.getAsString("email");
 		Number id = jsonLoggedUser.getAsNumber("id");
@@ -50,14 +51,9 @@ public class JWTService {
         jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.HMAC_SHA256);
         jws.setKey(key);
         jws.setDoKeyValidation(false);
-
-        JSONObject jsonObject = new JSONObject();
-		jsonObject.put("type", "JWT");
-		jsonObject.put("key", jws.getCompactSerialization());
-		
-		System.out.println(jsonObject);
-
-		return jsonObject.toJSONString();
+        
+        JwtDTO tokerJWT = new JwtDTO("JWT", jws.getCompactSerialization());
+		return tokerJWT;
 	}
 
 	

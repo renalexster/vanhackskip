@@ -7,7 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.skip.orderapi.utils.JsonBean;
 
 @Entity
@@ -19,7 +21,11 @@ public class OrderItem extends JsonBean{
 	
 	@ManyToOne
 	@JoinColumn(name="orderId")
+	@JsonIgnore
 	private Order order;
+	
+	@Transient
+	private Long orderId;
 	
 	@ManyToOne
 	@JoinColumn(name="productId")
@@ -77,6 +83,10 @@ public class OrderItem extends JsonBean{
 
 	public void setTotal(Double total) {
 		this.total = total;
+	}
+
+	public Long getOrderId() {
+		return this.order.getId();
 	}
 	
 }

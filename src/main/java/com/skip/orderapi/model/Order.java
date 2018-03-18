@@ -3,6 +3,7 @@ package com.skip.orderapi.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,8 +32,7 @@ public class Order extends JsonBean{
 	private String contact;
 	private Long storeId;
 	
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="aparelhoid")
+	@OneToMany(fetch=FetchType.LAZY, cascade= {CascadeType.ALL}, orphanRemoval=true, mappedBy="order")
 	private List<OrderItem> listOrderItem;
 
 	private Double total;

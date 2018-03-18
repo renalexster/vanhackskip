@@ -1,6 +1,8 @@
 package com.skip.orderapi;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import javax.transaction.Transactional;
 
@@ -12,10 +14,13 @@ import org.springframework.context.annotation.Bean;
 
 import com.skip.orderapi.model.Cousine;
 import com.skip.orderapi.model.Customer;
+import com.skip.orderapi.model.Order;
+import com.skip.orderapi.model.OrderItem;
 import com.skip.orderapi.model.Product;
 import com.skip.orderapi.model.Store;
 import com.skip.orderapi.repository.CousineRepository;
 import com.skip.orderapi.repository.CustomerRepository;
+import com.skip.orderapi.repository.OrderRepository;
 import com.skip.orderapi.repository.ProductRepository;
 import com.skip.orderapi.repository.StoreRepository;
 
@@ -30,6 +35,7 @@ public class OrderApiApplication {
 	@Autowired CousineRepository cousineRepo;
 	@Autowired StoreRepository storeRepo;
 	@Autowired ProductRepository productRepo;
+	@Autowired OrderRepository orderRepo;
 	
 	@Bean
 	@Transactional
@@ -70,6 +76,30 @@ public class OrderApiApplication {
 	        		,new Product(fixStoreOne, "Special Deep-Fried Fish", "Tilapia fish deep fried until flaky and tender", 12.95d)
 	        		,new Product(fixStoreTwo, "BBQ Pork Egg Foo Yung", "Chinese omelette filled with barbequed pork", 10.95d)
 	        		));
+	        
+	        Product fixProductOne = new Product();
+	        fixProductOne.setId(1l);
+	        
+	        Order order = new Order();
+	        order.setContact("Illa from Vanck");
+	        order.setCustomer(c1);
+	        order.setDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+	        order.setDeliveryAddress("Hotel Transamerica");
+	        order.setLastUpdate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+	        order.setStatus("OK");
+	        order.setStoreId(fixStoreOne.getId());
+	        order.setTotal(12.32d);
+	        
+	        OrderItem orderItemOne = new OrderItem();
+	        orderItemOne.setOrder(order);
+	        orderItemOne.setPrice(12.32d);
+	        orderItemOne.setProduct(fixProductOne);
+	        orderItemOne.setQuantity(1);
+	        orderItemOne.setTotal(12.32d);
+	        
+	        order.setListOrderItem(Arrays.asList(orderItemOne));
+	        
+	        orderRepo.save(order);
 	        
 	    };
 	}

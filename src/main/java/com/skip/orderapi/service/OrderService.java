@@ -16,7 +16,7 @@ public class OrderService {
 	private Logger LOG = LoggerFactory.getLogger(getClass());
 
 	public Order findOrderById(@Header("orderId") Long orderId){
-		return orderRepo.findOne(orderId);
+		return orderRepo.findOrderById(orderId);
 	}
 	
 	public Order persistOrder(@Body Order order) {
