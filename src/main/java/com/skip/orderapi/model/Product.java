@@ -7,7 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.skip.orderapi.utils.JsonBean;
 
 @Entity
@@ -19,11 +21,32 @@ public class Product extends JsonBean{
 
 	@ManyToOne
 	@JoinColumn(name="storeId")
+	@JsonIgnore
 	private Store store;
+	
+	@Transient
+	private Long storeId;
+	
 	private String name;
 	private String description;
 	private Double price;
 	
+	
+	public Product() {
+	}
+	
+	
+	
+	public Product(Store store, String name, String description, Double price) {
+		super();
+		this.store = store;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -53,6 +76,10 @@ public class Product extends JsonBean{
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Long getStoreId() {
+		return this.store.getId();
 	}
 	
 }

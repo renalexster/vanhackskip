@@ -5,16 +5,13 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
-import com.skip.orderapi.dto.AuthDTO;
 import com.skip.orderapi.exception.AuthException;
-import com.skip.orderapi.model.Customer;
-import com.skip.orderapi.service.CustomerService;
+import com.skip.orderapi.service.ProductService;
 import com.skip.orderapi.utils.ErrorHandleRouter;
-import com.skip.orderapi.utils.JWTService;
 import com.skip.orderapi.utils.Utils;
 
 @Component
-public class CamelCustomerRest extends RouteBuilder {
+public class CamelProductRest extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
@@ -26,25 +23,25 @@ public class CamelCustomerRest extends RouteBuilder {
 		.setHeader(Exchange.HTTP_RESPONSE_CODE).constant("500")
 		.markRollbackOnly();
 		
-		rest("/customer")
+		rest("/product")
 		.get().produces("application/json").route()
-		.log("LIST Customer updated...")
-		.bean(CustomerService.class, "listAllCustomers")
+		.log("Find All Product...")
+		.bean(ProductService.class, "listAll")
 		.bean(Utils.class, "debug")			
 		.endRest()
 		
-		.post().produces("plain/text").consumes("application/json").type(Customer.class).route()
-		.log("Inserting Customer...")
-		.bean(Utils.class, "debug")			
-		.bean(CustomerService.class, "insertNewCustomer").endRest()
 		
-		.post("/auth").produces("application/json").consumes("application/json").type(AuthDTO.class).route()
-		.log("Inserting Customer...")
+		.get("/search/{searchText}").produces("application/json").route()
+		.log("Find Product ${header[searchText]}...")
+		.bean(ProductService.class, "search")
 		.bean(Utils.class, "debug")			
-		.bean(CustomerService.class, "authCustomer")
-		.bean(JWTService.class, "createToken")
 		.endRest()
 		
+		.get("/{productId}").produces("application/json").route()
+		.log("Find Cousine ${header[productId]}...")
+		.bean(ProductService.class, "findById")
+		.bean(Utils.class, "debug")			
+		.endRest()
 		;
 	}
 

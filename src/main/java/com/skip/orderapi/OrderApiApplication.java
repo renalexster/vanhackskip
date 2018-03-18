@@ -12,9 +12,11 @@ import org.springframework.context.annotation.Bean;
 
 import com.skip.orderapi.model.Cousine;
 import com.skip.orderapi.model.Customer;
+import com.skip.orderapi.model.Product;
 import com.skip.orderapi.model.Store;
 import com.skip.orderapi.repository.CousineRepository;
 import com.skip.orderapi.repository.CustomerRepository;
+import com.skip.orderapi.repository.ProductRepository;
 import com.skip.orderapi.repository.StoreRepository;
 
 @SpringBootApplication
@@ -27,6 +29,7 @@ public class OrderApiApplication {
 	@Autowired CustomerRepository customeRepo;
 	@Autowired CousineRepository cousineRepo;
 	@Autowired StoreRepository storeRepo;
+	@Autowired ProductRepository productRepo;
 	
 	@Bean
 	@Transactional
@@ -48,6 +51,9 @@ public class OrderApiApplication {
 	        Cousine fix = new Cousine();
 	        fix.setId(1l);
 	        
+	        Store fixStore = new Store();
+	        fixStore.setId(1l);;
+	        
 	        
 	        storeRepo.save(Arrays.asList(
 	        		new Store("Hai Shang", "2991 Pembina Hwy, Winnipeg, Manitoba R3T 2H5, Canada", fix)
@@ -56,6 +62,11 @@ public class OrderApiApplication {
 	        		));
 	        
 	        
+	        productRepo.save(Arrays.asList(
+	        		new Product(fixStore, "Shrimp Tempura", "Fresh shrimp battered and deep fried until golden brown", 10.95d)
+	        		,new Product(fixStore, "Shrimp with Snow Peas and Cashew", "A delicious combination of fresh shrimp, snow peas, and cashew", 12.5d)
+	        		,new Product(fixStore, "Special Deep-Fried Fish", "Tilapia fish deep fried until flaky and tender", 12.95d)
+	        		));
 	        
 	    };
 	}
