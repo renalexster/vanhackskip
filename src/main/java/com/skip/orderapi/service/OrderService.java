@@ -1,6 +1,9 @@
 package com.skip.orderapi.service;
 
+import java.util.List;
+
 import org.apache.camel.Body;
+import org.apache.camel.ExchangeProperty;
 import org.apache.camel.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +21,12 @@ public class OrderService {
 	public Order findOrderById(@Header("orderId") Long orderId){
 		return orderRepo.findOrderById(orderId);
 	}
+	public List<Order> findOrderByCustomerId(@ExchangeProperty("X-customerId") Long customerId){
+		return orderRepo.listOrderByCustomer(customerId);
+	}
 	
 	public Order persistOrder(@Body Order order) {
+		order.getListOrderItem().forEach(orderItem -> orderItem.setOrder(order));
 		return orderRepo.save(order);
 	}
 }
