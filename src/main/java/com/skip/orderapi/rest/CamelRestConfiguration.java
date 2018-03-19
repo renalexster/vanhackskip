@@ -15,9 +15,9 @@ public class CamelRestConfiguration extends RouteBuilder{
 	@Override
 	public void configure() throws Exception {
 		restConfiguration().contextPath("/api/v1").component("restlet").dataFormatProperty("prettyPrint", "true")
-		.host("0.0.0.0").port(8181).apiContextPath("/api-docs").bindingMode(RestBindingMode.auto)
-		.apiProperty("init.base.path", "api/rest")
-		.apiProperty("init.api.path", "/api-docs")
+		.host("127.0.0.1").port(8181).apiContextPath("/api-docs").bindingMode(RestBindingMode.auto).enableCORS(true)
+		.apiProperty("init.base.path", "api/v1")
+		// .apiProperty("init.api.path", "/api-docs")
 		.apiProperty("init.api.description", "Skip API")
         .apiProperty("api.title", "Skip")
         .apiProperty("api.version", "1.0.0")
